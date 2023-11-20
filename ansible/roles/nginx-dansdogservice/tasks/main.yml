@@ -1,0 +1,10 @@
+---
+- name: Render the file dansdogservice.conf
+  template:
+    src: dansdogservice.conf
+    dest: /etc/nginx/sites-enabled/default
+
+- name: Render the file index.nginx-debian.html
+  template:
+    src: index.nginx-debian.html
+    dest: /var/www/html/index.nginx-debian.html

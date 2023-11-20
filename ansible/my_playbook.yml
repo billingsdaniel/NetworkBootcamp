@@ -1,0 +1,15 @@
+---
+- name: My First Ansible Playbook
+  hosts: localhost
+  become: true  # Run tasks with elevated privileges (sudo)
+
+  tasks:
+    - name: Ensure the nginx package is installed
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure the nginx-dansdogservice service is running
+      include_role:
+        name: nginx-dansdogservice
+

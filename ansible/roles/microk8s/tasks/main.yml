@@ -14,14 +14,14 @@
 #  debug:
 #    var: microk8s_status_cmd
 
-- name: debug
-  debug:
-    msg: "{{(microk8s_status_cmd.stdout | from_yaml).addons | selectattr('name', 'equalto','metallb') | first }}"
+- name: checking metallb status
+  set_fact:
+    microk8s_metallb_status: "{{(microk8s_status_cmd.stdout | from_yaml).addons | selectattr('name', 'equalto','metallb') | first }}"
 
 
 
-#- name: enable microk8s metallb
-#  ansible.builtin.shell:
-#    cmd: microk8s enable metallb
-#  register: microk8s_enable_metallb_cmd
-#  when: "metallb" in microk8s_status_cmd.stdout
+- name: enable microk8s metallb
+  ansible.builtin.shell:
+    cmd: microk8s enable metallb
+  register: microk8s_enable_metallb_cmd
+  when: microk8s_metallb_status.status == "disabled"

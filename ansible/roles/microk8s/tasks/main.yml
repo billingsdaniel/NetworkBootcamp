@@ -4,3 +4,12 @@
     name:
       - microk8s
     classic: true
+
+- name: check micrik8s status
+  ansible.builtin.shell:
+    cmd: microk8s status
+  register: microk8s_status_cmd
+
+- name: debug
+  debug:
+    var: microk8s_status_cmd

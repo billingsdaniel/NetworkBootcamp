@@ -16,7 +16,9 @@
 
 - name: debug
   debug:
-    msg: "{{(microk8s_status_cmd.stdout | from_yaml).addons}}"
+    msg: "{{(microk8s_status_cmd.stdout | from_yaml).addons | selectattr('name', 'equalto','metallb') | first }}"
+
+
 
 #- name: enable microk8s metallb
 #  ansible.builtin.shell:

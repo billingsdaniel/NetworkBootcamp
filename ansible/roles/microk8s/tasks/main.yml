@@ -16,7 +16,7 @@
 
 - name: debug
   debug:
-    msg: "{{microk8s_status_cmd.stdout | from_yaml | keys}}"
+    msg: "{{(microk8s_status_cmd.stdout | from_yaml).keys()}}"
 
 #- name: enable microk8s metallb
 #  ansible.builtin.shell:

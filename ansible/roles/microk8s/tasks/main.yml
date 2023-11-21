@@ -12,6 +12,14 @@
     microk8s_addon_name: metallb
     microk8s_addon_options: 10.0.0.18-10.0.0.18
 
+- name: ingress addon
+  include_role:
+    name: lib-microk8s-addon
+  vars:
+    microk8s_addon_name: ingress
+    microk8s_addon_options:
+
+#10.0.0.18-10.0.0.18
 
 #- name: enable microk8s metallb
 #  ansible.builtin.shell:

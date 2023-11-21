@@ -24,7 +24,7 @@
 - name: checking for colon after addon
   set_fact:
     microk8s_addon_options_final: "{{
-    ':'+microk8s_addon_options
+    ':'+(microk8s_addon_options | default (''))
     }}"
   when: microk8s_addon_options is defined
 

@@ -7,6 +7,7 @@
   ansible.builtin.shell:
     cmd: microk8s status --format yaml
   register: microk8s_status_cmd
+  changed_when: false
 
 #- name: debug
 #  debug:

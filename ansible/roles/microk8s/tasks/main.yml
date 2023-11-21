@@ -7,7 +7,7 @@
 
 - name: metallb addon
   include_role:
-    name: lib_microk8s_addon
+    name: lib-microk8s-addon
   vars:
     microk8s_addon_name: metallb
     microk8s_addon_options: 10.0.0.18-10.0.0.18

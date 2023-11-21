@@ -5,23 +5,16 @@
       - microk8s
     classic: true
 
-- name: check micrik8s status
-  ansible.builtin.shell:
-    cmd: microk8s status --format yaml
-  register: microk8s_status_cmd
-
-#- name: debug
-#  debug:
-#    var: microk8s_status_cmd
-
-- name: checking metallb status
-  set_fact:
-    microk8s_metallb_status: "{{(microk8s_status_cmd.stdout | from_yaml).addons | selectattr('name', 'equalto','metallb') | first }}"
+- name: metallb addon
+  include_role:
+    name: lib_microk8s_addon
+  vars:
+    microk8s_addon_name: metallb
+    microk8s_addon_options: 10.0.0.18-10.0.0.18
 
 
-
-- name: enable microk8s metallb
-  ansible.builtin.shell:
-    cmd: microk8s enable metallb:10.0.0.18-10.0.0.18
-  register: microk8s_enable_metallb_cmd
-  when: microk8s_metallb_status.status == "disabled"
+#- name: enable microk8s metallb
+#  ansible.builtin.shell:
+#    cmd: microk8s enable metallb:10.0.0.18-10.0.0.18
+#  register: microk8s_enable_metallb_cmd
+#  when: microk8s_metallb_status.status == "disabled"

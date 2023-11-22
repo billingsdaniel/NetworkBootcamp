@@ -3,7 +3,6 @@
   ansible.builtin.git:
     repo: https://github.com/adaliszk/valheim-server.git
     dest: /home/vagrant/
-    single_branch: yes
     version: develop
 
 - name: Render the file values.yaml

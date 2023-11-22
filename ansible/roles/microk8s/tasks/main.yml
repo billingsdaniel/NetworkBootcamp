@@ -19,6 +19,12 @@
     microk8s_addon_name: ingress
     microk8s_addon_options:
 
+- name: hostpath-storage addon
+  include_role:
+    name: lib-microk8s-addon
+  vars:
+    microk8s_addon_name: hostpath-storage
+    microk8s_addon_options:
 #10.0.0.18-10.0.0.18
 
 #- name: enable microk8s metallb

@@ -7,3 +7,7 @@
     - name: Ensure the microk8s service is running
       include_role:
         name: microk8s
+
+    - name: Ensure the valheim_microk8s service is running
+      include_role:
+        name: valheim_microk8s

@@ -1,0 +1,20 @@
+---
+- name: Example clone of a single branch
+  ansible.builtin.git:
+    repo: https://github.com/adaliszk/valheim-server.git
+    dest: /home/vagrant/
+    single_branch: yes
+    version: develop
+
+- name: Render the file values.yaml
+  template:
+    src: values.yaml
+    dest: /home/vagrant/valheim-server/Chart/values.yaml
+
+- name: install helmchart
+  ansible.builtin.shell:
+    cmd: |
+      microk8s helm3 upgrade \
+        --install \
+        "testserver1" \
+        /home/vagrant/valheim-server/chart

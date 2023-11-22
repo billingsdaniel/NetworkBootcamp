@@ -1,0 +1,77 @@
+server:
+  codeName: "Valheim"
+  name: "Valheim on Kubernetes!"
+  world: "Dedicated"
+  password: "12345"
+  public: "1"
+
+  admins: [ ]
+  permitted: [ ]
+  banned: [ ]
+
+  annotations: { }
+  labels: { }
+  resources: { }
+
+data:
+  storageClass: microk8s-hostpath
+  storageSize: 2G
+
+backups:
+  storageClass: microk8s-hostpath
+  storageSize: 3G
+  retention: 6
+
+ingress:
+  enabled: true
+  type: LoadBalancer
+
+  ports:
+    valheim:
+      port: 2456
+      targetPort: 2456
+      protocol: UDP
+
+    msqp:
+      port: 2457
+      targetPort: 2457
+      protocol: UDP
+
+    msqp-default:
+      port: 27015
+      targetPort: 2457
+      protocol: UDP
+
+  annotations: { }
+  labels: { }
+  spec: { }
+
+image:
+  name: adaliszk/valheim-server
+  tag: latest
+  pullPolicy: IfNotPresent
+  pullSecrets: [ ]
+
+metricsExporter:
+  enabled: false
+
+  annotations:
+    prometheus.io/scrape: true
+    prometheus.io/port: 3903
+
+  labels: { }
+
+  service:
+    enabled: true
+    type: ClusterIP
+    ports:
+      http:
+        port: 3903
+        targetPort: 3903
+        protocol: TCP
+
+  image:
+    name: adaliszk/valheim-server-monitoring
+    tag: metrics-0.147.3
+    pullPolicy: IfNotPresent
+    pullSecrets: [ ]

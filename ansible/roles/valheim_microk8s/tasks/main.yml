@@ -9,7 +9,7 @@
 - name: Render the file values.yaml
   template:
     src: values.yaml
-    dest: /home/vagrant/valheim-server/Chart/values.yaml
+    dest: /home/vagrant/valheim-server/chart/values.yaml
 
 - name: install helmchart
   ansible.builtin.shell:

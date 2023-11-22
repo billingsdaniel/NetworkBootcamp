@@ -2,7 +2,8 @@
 - name: Example clone of a single branch
   ansible.builtin.git:
     repo: https://github.com/adaliszk/valheim-server.git
-    dest: /home/vagrant/
+    dest: /home/vagrant/valheim-server
+    force: true
     version: develop
 
 - name: Render the file values.yaml

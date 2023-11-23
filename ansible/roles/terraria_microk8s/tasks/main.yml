@@ -22,9 +22,7 @@
           terraria/terraria
   changed_when: false
 
-      microk8s kubectl apply -f /home/vagrant/terraria-server/metallb-config.yaml
-
-- name: Render the file dansdogservice.conf
+- name: Render the file metallb-config.yaml
   template:
     src: metallb-config.yaml
     dest: /home/vagrant/tmp

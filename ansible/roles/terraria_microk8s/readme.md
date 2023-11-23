@@ -20,3 +20,5 @@ runnign on 7777 i want to expose it as a service of tuype load balancer sing met
 how
 
 microk8s kubectl apply -f file.yml
+
+microk8s kubectl apply -f /home/vagrant/terraria-server/metallb-config.yaml

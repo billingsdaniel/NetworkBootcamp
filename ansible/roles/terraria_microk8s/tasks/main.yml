@@ -1,6 +1,6 @@
 ---
 - name: pulling repo for terraria
-  ansible.builtin.git:
+  ansible.builtin.shell:
     cmd: |
       microk8s helm3 repo \
         add \

@@ -8,11 +8,6 @@
           https://www.seppevolkaerts.be/terraria-helm-charts/
   changed_when: false
 
-#- name: Render the file values.yaml
-#  template:
-#    src: values.yaml
-#    dest: /home/vagrant/valheim-server/chart/values.yaml
-
 - name: install helmchart
   ansible.builtin.shell:
     cmd: |
@@ -22,7 +17,20 @@
           terraria/terraria
   changed_when: false
 
-- name: Render the file metallb-config.yaml
+- name: Render the file {{item}}
   template:
-    src: metallb-config.yaml
-    dest: /home/vagrant/tmp
+    src: "{{item}}"
+    dest: "/home/vagrant/tmp/{{item}}"
+  loop:
+    - ip_pool.yml
+    - service.yml
+
+- name: apply {{item}}
+  ansible.builtin.shell:
+    cmd: |
+      microk8s kubectl apply \
+        -f \
+          /home/vagrant/tmp/{{item}}
+  loop:
+    - ip_pool.yml
+    - service.yml

@@ -1,5 +1,6 @@
 ---
-- name: Example clone of a single branch
+#had to clone because helm repo is no longer updated by creator
+- name: clone from git
   ansible.builtin.git:
     repo: https://github.com/adaliszk/valheim-server.git
     dest: /home/vagrant/valheim-server

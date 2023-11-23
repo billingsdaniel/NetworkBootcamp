@@ -1,0 +1,21 @@
+---
+- name: pulling repo for terraria
+  ansible.builtin.git:
+    cmd: |
+      microk8s helm3 repo \
+        add \
+          terraria \
+          https://www.seppevolkaerts.be/terraria-helm-charts/
+
+#- name: Render the file values.yaml
+#  template:
+#    src: values.yaml
+#    dest: /home/vagrant/valheim-server/chart/values.yaml
+#
+#- name: install helmchart
+#  ansible.builtin.shell:
+#    cmd: |
+#      microk8s helm3 upgrade \
+#        --install \
+#          "testserver1" \
+#          /home/vagrant/valheim-server/chart

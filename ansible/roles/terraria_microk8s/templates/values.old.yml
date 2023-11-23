@@ -1,0 +1,22 @@
+server:
+  service:
+    type: LoadBalancer
+    loadBalancerIP: 192.168.25.206
+  password: steambrokenforever
+world:
+
+  # World name, used for the world save file
+  name: "The Magical Eater of Relief"
+
+  # World size: small, medium, large
+  size: large
+
+  # World difficulty: classic, expert, master or journey
+  difficulty: expert
+
+image:
+  terraria:
+    tag: "vanilla-latest"
+
+
+

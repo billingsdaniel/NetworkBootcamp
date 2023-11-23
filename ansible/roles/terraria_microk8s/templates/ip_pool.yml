@@ -6,4 +6,4 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-  - 10.0.0.185
+  - 10.0.0.185/24

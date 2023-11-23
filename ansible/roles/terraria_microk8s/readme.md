@@ -12,3 +12,11 @@ microk8s helm3 repo add \
           https://www.seppevolkaerts.be/terraria-helm-charts/
 
 microk8s helm3 search repo terraria
+
+
+look up kubernetes load balancer service with metallb
+
+runnign on 7777 i want to expose it as a service of tuype load balancer sing metallb
+how
+
+microk8s kubectl apply -f file.yml

@@ -20,7 +20,7 @@
 - name: Render the file {{item}}
   template:
     src: "{{item}}"
-    dest: "/home/vagrant/tmp/{{item}}"
+    dest: "/home/vagrant/NetworkBootcamp/tmp/{{item}}"
   loop:
     - ip_pool.yml
     - service.yml
@@ -30,7 +30,7 @@
     cmd: |
       microk8s kubectl apply \
         -f \
-          /home/vagrant/tmp/{{item}}
+          /home/vagrant/NetworkBootcamp/tmp/{{item}}
   loop:
     - ip_pool.yml
     - service.yml

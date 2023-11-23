@@ -6,6 +6,7 @@
         add \
           terraria \
           https://www.seppevolkaerts.be/terraria-helm-charts/
+  changed_when: false
 
 #- name: Render the file values.yaml
 #  template:

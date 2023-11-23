@@ -12,11 +12,11 @@
 #  template:
 #    src: values.yaml
 #    dest: /home/vagrant/valheim-server/chart/values.yaml
-#
-#- name: install helmchart
-#  ansible.builtin.shell:
-#    cmd: |
-#      microk8s helm3 upgrade \
-#        --install \
-#          "testserver1" \
-#          /home/vagrant/valheim-server/chart
+
+- name: install helmchart
+  ansible.builtin.shell:
+    cmd: |
+      microk8s helm3 upgrade \
+        --install \
+          "terraira1" \
+          terraria/terraria

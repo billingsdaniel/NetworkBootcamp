@@ -1,4 +1,5 @@
 # main commands in powershell
+# learn more object oriented later?
 
 stop-service
 start-service

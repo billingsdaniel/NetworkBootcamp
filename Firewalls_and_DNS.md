@@ -1,14 +1,15 @@
-#DNS
+
+#  DNS allows websites to be called by name, and not ip address, eg. google.com not 8.8.8.8
+# DNS in unix uses nginx
 
 apt-get update
 apt-get install nginx
 
 
 nginx 
-#pronounced nginx (engine x, or gyne for memes)
-# USE CHAT GPS FOR EVERYTHING!!
+# pronounced nginx (engine x, or gyne for memes)
 
-#DNS using Bind
+# DNS using Bind
 
 `sudo vi /etc/bind/named.conf.options`
 
@@ -26,7 +27,7 @@ options {
 };
 ```
 
-#zone file for chosen domain ${domain name}
+# zone file for chosen domain ${domain name}
 
 `sudo nano /etc/bind/db.myservers.net`
 
@@ -41,7 +42,7 @@ zone "myservers.net" {
 `sudo systemctl restart bind9`
 
 
-#firewalls
+# firewall in unix
 `
 ufw status
 ufw enable`

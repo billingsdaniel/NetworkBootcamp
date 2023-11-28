@@ -1,3 +1,70 @@
+mkdir vagrant_test
+cd vagrant_test
+vagrant init "gusztavvargadr/ubuntu-desktop"
+vagrant up
+
+how do I add a static ip address to ubuntu with the terminal
+ChatGPT
+To add a static IP address to Ubuntu using the terminal, you'll need to modify the network configuration file. Here are the general steps:
+
+Open a terminal window.
+
+Navigate to the network configuration directory:
+
+bash
+Copy code
+cd /etc/netplan
+List the files in the directory to find the appropriate configuration file. It's typically something like 01-netcfg.yaml or 50-cloud-init.yaml:
+
+bash
+Copy code
+ls
+Open the configuration file using a text editor like nano or gedit. Replace "your-filename.yaml" with the actual filename you found in the previous step:
+
+bash
+Copy code
+sudo nano your-filename.yaml
+Inside the file, you'll see YAML-formatted network configuration. Add or modify the addresses and gateway4 lines to set the static IP address and gateway. For example:
+
+yaml
+Copy code
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      addresses:
+
+192.168.1.100/24
+    gateway4: 192.168.1.1
+    nameservers:
+      addresses: [8.8.8.8, 8.8.4.4]
+Adjust the values according to your network configuration.
+
+Save the changes and exit the text editor.
+
+Apply the changes using the following command:
+
+bash
+Copy code
+sudo netplan apply
+This will apply the new network configuration and assign the static IP address. Make sure to replace the values in the example with your specific network details. Additionally, if you're using a different network interface (e.g., eth1 instead of eth0), adjust the configuration accordingly.
+
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      addresses:
+        - 192.168.1.100/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+
+
+
+
 `sudo su`
 `vi /etc/netplan`  # <-- tab key
 
@@ -142,3 +209,4 @@ traceroute destination_ip
 
 
 
+StefanScherer/windows_2019 --box-version 2021.05.15

@@ -1,0 +1,33 @@
+---
+
+- name: include preflight
+  include_tasks: preflight.yml
+
+- name: check microk8s status
+  ansible.builtin.shell:
+    cmd: microk8s status --format yaml
+  register: microk8s_status_cmd
+  changed_when: false
+
+#- name: debug
+#  debug:
+#    var: microk8s_status_cmd
+
+- name: checking addon status ({{ microk8s_addon_name }})
+  set_fact:
+    microk8s_addon_status: "{{
+      (microk8s_status_cmd.stdout | from_yaml).addons 
+        | selectattr('name', 'equalto', microk8s_addon_name) 
+        | first 
+    }}"
+
+- name: checking for colon after addon
+  set_fact:
+    microk8s_addon_options_final: ":{{microk8s_addon_options | default ('')}}"
+  when: microk8s_addon_options is defined
+
+- name: enable microk8s ({{microk8s_addon_name}})
+  ansible.builtin.shell:
+    cmd: microk8s enable {{microk8s_addon_name}}{{microk8s_addon_options_final | default('')}}
+  register: microk8s_enable_addon_cmd
+  when: microk8s_addon_status.status == "disabled"

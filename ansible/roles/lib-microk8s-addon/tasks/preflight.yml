@@ -1,0 +1,6 @@
+---
+
+- name: asserts
+  assert:
+    that:
+      - microk8s_addon_name is defined

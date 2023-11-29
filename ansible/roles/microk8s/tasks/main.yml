@@ -1,0 +1,36 @@
+---
+- name: Install microk8s
+  community.general.snap:
+    name:
+      - microk8s
+    classic: true
+
+- name: metallb addon
+  include_role:
+    name: lib-microk8s-addon
+  vars:
+    microk8s_addon_name: metallb
+    microk8s_addon_options: 10.0.0.18-10.0.0.18
+
+- name: ingress addon
+  include_role:
+    name: lib-microk8s-addon
+  vars:
+    microk8s_addon_name: ingress
+    microk8s_addon_options:
+
+- name: hostpath-storage addon
+  include_role:
+    name: lib-microk8s-addon
+  vars:
+    microk8s_addon_name: hostpath-storage
+    microk8s_addon_options:
+#10.0.0.18-10.0.0.18
+
+#- name: enable microk8s metallb
+#  ansible.builtin.shell:
+#    cmd: microk8s enable metallb:10.0.0.18-10.0.0.18
+#  register: microk8s_enable_metallb_cmd
+#  when: microk8s_metallb_status.status == "disabled"
+
+

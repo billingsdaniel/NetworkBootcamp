@@ -1,0 +1,36 @@
+---
+- name: pulling repo for terraria
+  ansible.builtin.shell:
+    cmd: |
+      microk8s helm3 repo \
+        add \
+          terraria \
+          https://www.seppevolkaerts.be/terraria-helm-charts/
+  changed_when: false
+
+- name: install helmchart
+  ansible.builtin.shell:
+    cmd: |
+      microk8s helm3 upgrade \
+        --install \
+          "terraira1" \
+          terraria/terraria
+  changed_when: false
+
+- name: Render the file {{item}}
+  template:
+    src: "{{item}}"
+    dest: "/home/vagrant/NetworkBootcamp/tmp/{{item}}"
+  loop:
+    - ip_pool.yml
+    - service.yml
+
+- name: apply {{item}}
+  ansible.builtin.shell:
+    cmd: |
+      microk8s kubectl apply \
+        -f \
+          /home/vagrant/NetworkBootcamp/tmp/{{item}}
+  loop:
+    - ip_pool.yml
+    - service.yml

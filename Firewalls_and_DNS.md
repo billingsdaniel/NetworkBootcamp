@@ -1,8 +1,11 @@
 ## DNS 
 -  DNS allows websites to be called by name, and not ip address, eg. google.com not 8.8.8.8
-- DNS in unix uses nginx
-- `apt-get update`
-- `apt-get install nginx`
+- DNS in unix uses nginx\
+   ```
+   apt-get update
+   apt-get install nginx
+   ```
+
 - uses the nginx command `sudo nginx OPPERATION`
 - pronounced nginx (engine x)
 
@@ -35,7 +38,7 @@ zone "myservers.net" {
 - `sudo systemctl restart bind9`
 
 
-### firewall in unix uses ufw 
-`
-ufw status
-ufw enable`
+### firewall in unix uses ufw (uncomplicated firewall)
+
+`ufw status`\
+`ufw enable`

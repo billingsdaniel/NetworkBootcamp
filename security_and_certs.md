@@ -3,9 +3,6 @@
 
 #  gen private key:
 
-bash
-
-Copy code
 
 openssl genpkey -algorithm RSA -out dansdogservice.key
 

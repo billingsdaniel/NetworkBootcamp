@@ -45,7 +45,7 @@ system user do switch user (no user specified switches to root?)\
 ### dhcp
 1. installing dhcp server\
 `sudo apt install isc-dhcp-server`
-2. change netplan to dhcp settings. dont forget backup
+2. change netplan on client machine to use dhcp. dont forget backup
     ```
     network:
       version: 2
@@ -55,36 +55,31 @@ system user do switch user (no user specified switches to root?)\
           dhcp4: true
     ```
 
-### how to change ip address of assigned MAC address
-1. find MAC address of destination ${Mac Address}\
+### how to create dhcp reservation (mac address to ip)
+1. find MAC address of host ${Mac Address}\
+`ip a`
+2. open dhcp config
 `vi /etc/dhcp/dhcpd.conf`
-2. change text to come variation of 
+3. change config text to 
     ```
     host Accountant {
     hardware ethernet ${Mac Address};
     fixed-address ${IP Address};
     }
     ```
-3. restart DHCP protocol\
+4. restart DHCP 
 `systemctl restart isc-dhcp-server.service`
-4. example
+5. example
     ```
     host Accountant {
     hardware ethernet 08:00:27:02:db:1a;
     fixed-address 192.168.2.100;
     ```
-5. lease file directory\
+6. lease file directory\
  `/var/lib/dhcp/dhcpd.leases`
-6. actually release an address in ubuntu, like for real this time,\
+- to actually release an address in ubuntu, client side \
 `sudo systemctl restart systemd-networkd`
 
-
-
-### ip forwarding with DHCP
-- Check the current IP forwarding status\
- `sysctl net.ipv4.ip_forward`
-- Enable IP forwarding (if not already enabled)\
- `sysctl -w net.ipv4.ip_forward=1`
 
 ## basic network troubleshooting
 - ping the gateway
@@ -92,7 +87,13 @@ system user do switch user (no user specified switches to root?)\
 - try dns lookup
 - curl google.com
 
-### IP tables and routing
+## iptables and routing
+### ip forwarding with router
+- Check the current IP forwarding status\
+ `sysctl net.ipv4.ip_forward`
+- Enable IP forwarding (if not already enabled)\
+ `sysctl -w net.ipv4.ip_forward=1`
+###  iptables
 1. packet engine IP tables, a spreadsheet of rules
 2. check iptables (firewall) rules:
 3. review your iptables rules to ensure that they are not blocking the forwarding of packets. Use the following command to display the current rules:\
@@ -100,11 +101,9 @@ system user do switch user (no user specified switches to root?)\
 4. If needed, you can add rules to allow forwarding. For example:\
 `iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT`
 5. Replace eth0 and eth1 with your specific network interfaces.
-6. Routing table
-7. Double check routing tables.  Make sure there is a valid route for the destination of the packets you are trying to forward.\
+6. Double check routing tables.  Make sure there is a valid route for the destination of the packets you are trying to forward.\
 `ip route`
-
-- enable NAT (network address translation) to allow forwarding to virtual machines\
+7. enable NAT (network address translation) to allow forwarding to virtual machines\
 `iptables -t nat -s 192.168.1.0/24 -A POSTROUTING -j MASQUERADE`
 
 

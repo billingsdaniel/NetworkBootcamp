@@ -1,5 +1,5 @@
 ### main commands in powershell
-- learn more object oriented later?
+learn more object oriented later?
 
 - `stop-service`
 - `start-service`
@@ -16,8 +16,5 @@
 - `-like`
 - `-notlike`
 - `-and`
-- `-or`
-#### https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.4
-
-#### substring search
-#### -like "*searchterm*"
+- `-or`\
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.4

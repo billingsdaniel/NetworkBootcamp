@@ -1,14 +1,6 @@
-## DNS 
-- DNS allows websites to be called by name, and not ip address, eg. google.com not 8.8.8.8
-- can use nginx as webserver
-    ```
-    apt-get update
-    apt-get install nginx
-    ```
+## testing DNS and Certs with TLS
+DNS allows websites to be called by name, and not ip address, eg. google.com not 8.8.8.8
 
-- uses the nginx command \
-`sudo nginx OPPERATION`
-- pronounced nginx (engine x)
 
 ### DNS using Bind
 
@@ -44,7 +36,21 @@
 `ufw status`\
 `ufw enable`
 
+### using nginx to host website
+- install nginx (pronounced engine x)
+    ```
+    apt-get update
+    apt-get install nginx
+    ```
 
+- start nginx\
+`systemctl start nginx`
+- other commands for systemctl
+  1. start
+  2. stop
+  3. status
+  4. restart
+  5. enable 
 ### to generate cert self-signed for dansdogerservice.myservers.net with openssl
 
 1. gen private key:\
@@ -63,10 +69,10 @@
 7. make sure private key isnt hosted anywhere, sensitive info for security of hosted site
 8. can set permissions for restricting file access with `chmod`\
 `chmod 400 dansdogservice.key`
-9. If self signing certs will trigger sec warning in browser since not signed by Cert Authority. Best to only use for testing. In prod, likely using a viable trusted cert from a CA company or project wide.
-10. fix config for nginx \
-`cert nginx config`
-11. example config
+9. If self signing certs, will trigger sec warning in browser since not signed by Cert Authority. Best to only use for testing. In prod, likely using a viable trusted cert from a CA company or project wide.
+10.  modify config for nginx \
+`vi /etc/nginx/sites-enabled/default`
+11. example tls config
     ```
     server {
     
@@ -89,11 +95,12 @@
         ssl_prefer_server_ciphers off;
     
     
-        # Other server configurations...
+      
     
     }
     ```
-
-
-
-
+12. restart nginx\
+`systemtcl restart nginx`
+13. double check nginx status\
+`systemctl status nginx`
+14. double check if website is functional with above cert in browser

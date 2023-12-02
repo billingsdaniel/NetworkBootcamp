@@ -13,10 +13,10 @@ system user do switch user (no user specified switches to root?)\
 1. move to netplan directory using cd (change directory) <-- use tab key\
     `cd /etc/netplan`
 2. use ls (list) to find the correct .yml file. usually something like  01-netcfg.yaml or 50-cloud-init.yaml:
-3. open the file using vi. In this case, `01-cetcfg.yaml` <-- use tab key\
-`vi /etc/netplan/01-cetcfg.yaml`
+3. open the file using vi. In this case, `01-netcfg.yaml` <-- use tab key\
+`vi /etc/netplan/01-netcfg.yaml`
 4. highly advised to make a copy of the file with .bak incase you need to change it back. use `cp SOURCE DEST`\
-`cp /etc/netplan/01-cetcfg.yaml /etc/netplan/01-cetcfg.yaml.bak`
+`cp /etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml.bak`
 5. inside, modify the yaml code for the address(s) you want. for example
     ```network:
       version: 2

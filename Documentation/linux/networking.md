@@ -1,15 +1,33 @@
-### running vagrant vbox
-1. `mkdir vagrant_test`
-2. `cd vagrant_test`
-3. `vagrant init "gusztavvargadr/ubuntu-desktop"`
-4. `vagrant up`
+## Linux Networking Basics
+This is how to set up networking on a new machine, how to forward network traffic, and firewall basics in linux.
 
-#### move to system user if required. else use `sudo` before every system level command
-system user do switch user (no user specified switches to root?)\
+## Contents
+1. Using Sudo
+2. Network Adapters
+3. Assigning Static IP
+4. Iptables and Routing
+   1. Traffic Forwarding
+   2. Basic Network Troubleshooting
+   3. Logs
+5. Firewall
+6. Basic Network Troubleshooting
+
+### Using Sudo
+When using system level commands, sometimes it is required to have admin privileges to affect the system as a whole and not just the specific user you are logged in as. In cases like this, you use `sudo` before a command. For example:
+`sudo apt-get install nginx` 
+You can also switch to a superuser if you want ALL commands to run this way. Doing so may have some drawbacks by making any mistakes have larger than desired impact, and harder to fix afterwards.
 `sudo su`
 
-### how to assign static IP address
+### Network Adapters
+For turning on or off hardware adapters (physical or otherwise):
+`ip link set eth(insert adapter#) up`\
+`ip link set eth(insert adapter#) down`\
+To check if the adapter is on the route table:
+`ip route show`
 
+### Assigning Static IP address:
+Sometimes you want to assign a static IP address to a machine for a specific purpose instead of allowing DHCP to handle assignment. This may be because you need other machines to allways have a specific reference point, such as being used as a router or DNS server. 
+In linux, static IP is handled by the netplan folder, and using `vi` to edit reference files.
 1. move to netplan directory using cd (change directory) <-- use tab key\
     `cd /etc/netplan`
 2. use ls (list) to find the correct .yml file. usually something like  01-netcfg.yaml or 50-cloud-init.yaml:
@@ -27,94 +45,31 @@ system user do switch user (no user specified switches to root?)\
           addresses:
             - 192.168.1.1/24
     ``` 
-   6. save using  write and quit\
-   `:wq`
+6. save using  write and quit\
+`:wq`
 7. apply netplan\
  `netplan apply`
 8. double check ip\
 `ifconfig`
 
 
-#### for turning off adapters and back on
-`ip link set eth(insert adapter#) up`\
-`ip link set eth(insert adapter#) down`\
-`ip route show`
+   
 
-### dhcp
-1. installing dhcp server on host machine\
-`sudo apt install isc-dhcp-server`
-2. configure DHCP range in config
-`vi /etc/dhcp/dhcpd.conf`\
-```
-subnet 192.168.1.0 netmask 255.255.255.0 {
-    range 192.168.1.2 192.168.1.100;
-    option routers 192.168.1.1;
-    option domain-name-servers 8.8.8.8, 8.8.4.4;
-}
-```
-3. restart dhcp
-`sudo systemctl restart isc-dhcp-server
-`
-4. always double check
-`sudo systemctl status isc-dhcp-server
-`
-5. 
-2. change netplan on client machine to use dhcp. dont forget backup
-    ```
-    network:
-      version: 2
-      renderer: networkd
-      ethernets:
-        eth0:
-          dhcp4: true
-    ```
-
-### how to create dhcp reservation (mac address to ip)
-1. find MAC address of host ${Mac Address}\
-`ip a`
-2. open dhcp config
-`vi /etc/dhcp/dhcpd.conf`
-3. change config text to 
-    ```
-    host Accountant {
-    hardware ethernet ${Mac Address};
-    fixed-address ${IP Address};
-    }
-    ```
-4. restart DHCP 
-`systemctl restart isc-dhcp-server.service`
-5. example
-    ```
-    host Accountant {
-    hardware ethernet 08:00:27:02:db:1a;
-    fixed-address 192.168.2.100;
-    ```
-6. lease file directory\
- `/var/lib/dhcp/dhcpd.leases`
-- to actually release an address in ubuntu, client side \
-`sudo systemctl restart systemd-networkd`
-
-
-## basic network troubleshooting
-- ping the gateway
-- ping the DNS servers
-- try dns lookup
-- curl google.com
-
-## iptables and routing
-### ip forwarding with router
+## Iptables and Routing
+When connecting two networks, it is necessary to forward packets through specific connection points, in this case a machine set up as a router. To do this we must set up ip forwarding. This may be used to connect an internal network to another machine connected to the internet or to connect multiple subnets together. This is a good place to use `sudo`, and having a static IP is usually required. IP Tables is a packet engine, a spreadsheet of rules for the network to follow. We also make use of MASQUERADE to connect our private network to the internet. MASQUERADE translates this traffic, mapping the packets to the correct location on the network. This is also known as NAT (Network Address Translation)
+### Step 1: Sysctl
 - Check the current IP forwarding status\
  `sysctl net.ipv4.ip_forward`
 - Enable IP forwarding (if not already enabled)\
  `sysctl -w net.ipv4.ip_forward=1`
-- Save these settings to config file to provite continuity of service across reboots
+- Save these settings to config file to provide continuity of service across reboots
 - `vi /etc/sysctl.conf`
 ```
 net.ipv4.ip_forward = 1
 - apply changes with
 `sysctl -p
 ```
-###  iptables
+### Step 2: iptables
 1. packet engine IP tables, a spreadsheet of rules
 2. check iptables (firewall) rules:
 3. review your iptables rules to ensure that they are not blocking the forwarding of packets. Use the following command to display the current rules:\
@@ -132,13 +87,13 @@ net.ipv4.ip_forward = 1
 10. save iptables config
 `sh -c 'iptables-save > /etc/iptables/rules.v4`
 
-### Network interface configurations:
+### Step 3: Network interface configurations:
 1. Double-check the configurations of the network interfaces on your router. Ensure that the interfaces are up and configured with the correct IP addresses and subnet masks.\
 `ip addr show`
 2. check firewall on the destination device:
 3. Check if the destination device has a firewall that might be blocking incoming packets from the router. Make sure the firewall on the destination device allows traffic from the router.
 
-### Packet forwarding and NAT:
+### Step 4: Packet forwarding and NAT:
 - If your router is performing Network Address Translation (NAT), ensure that it is correctly configured. Check the rules related to NAT in iptables.
 
 ## Logs:
@@ -147,7 +102,7 @@ net.ipv4.ip_forward = 1
 3. use tail command (for long log files, only displays last 10 lines)
 `tail -f /var/log/syslog`\
 `tail -f /var/log/syslog | grep `
-4. use head command if tail doesnt display what you want, or use full log file with `| grep|`
+4. Use head command if tail doesn't display what you want, or use the full log file with `| grep|`
 `head -f /var/log/syslog | grep `\
 `journalctl | grep `
 5. Testing connectivity:
@@ -156,14 +111,15 @@ net.ipv4.ip_forward = 1
 `traceroute destination_ip`
 
 
-   
-## Misc commands for bash
-- to delete contents of ${filename}\
-`sudo cat /dev/null > ${filename}`
-- how to search for correct file - \
-`systemctl status | grep ${filena`
-- in git click Terminal at bottom to edit commit messages in vi only before push\
-`git commit --amend`
 
-#### windows vbox
-- StefanScherer/windows_2019 --box-version 2021.05.15
+## Firewall
+The basic firewall system in linux is `ufw`, Uncomplicated Firewall. Sometimes this may cause issues when connecting. You can enable or disable this when needed, or check status, but try to not get in the habit of leaving it off.
+`ufw status`\
+`ufw enable`
+
+
+## Basic Network Troubleshooting
+- ping the gateway
+- ping the DNS servers
+- try dns lookup
+- curl google.com

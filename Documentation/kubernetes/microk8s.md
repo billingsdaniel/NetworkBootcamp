@@ -1,14 +1,3 @@
-installing microk8s
-add helm repo
-searching for usable repos to scavenge from
-
-checking logs
-
-
-
-
-helm chart is kinda like ansible, sets templates, services, values, and sets the rulesets for the deployments.
-
 # Kubernetes
 
 ## Kubernetes Concepts

@@ -49,7 +49,8 @@ To set up an DNS server with windows, we first start with Active Directory and m
 19. ![Image19.jpeg](Assets%2FADandDNS%2FDNSpart2%2FImage19.jpeg)
 20. ![Image20.jpeg](Assets%2FADandDNS%2FDNSpart2%2FImage20.jpeg)
 21. ![Image21.jpeg](Assets%2FADandDNS%2FDNSpart2%2FImage21.jpeg)
-22. Close wizard and wait for restart.
+22. Fix networking (in this case static IP), and then click back button and forward button in wizard to pass prerequisite check.
+23. Close wizard and wait for restart.
 
 ## DNS Settings
 1. ![Image1.jpeg](Assets%2FADandDNS%2FDNSpart3%2FImage1.jpeg)

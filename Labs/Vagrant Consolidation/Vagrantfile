@@ -10,7 +10,10 @@ Vagrant.configure("2") do |config|
       vb1.memory = "3072"
     end
     vm1.vm.provision "shell", path: "router_command_lines.sh"
+    vm1.vm.provision "shell", path: "dns_command_lines.sh"
   end
+
+
 
 
 

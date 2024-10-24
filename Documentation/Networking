@@ -1,0 +1,8 @@
+arp (finding mac address)
+dns (udp, no response required)
+tcp ( 3 way handshake)
+TLS (transport layer security)
+http (website renders, nonsec)
+certs handling
+https
+

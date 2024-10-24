@@ -66,8 +66,10 @@ When connecting two networks, it is necessary to forward packets through specifi
 - `vi /etc/sysctl.conf`
 ```
 net.ipv4.ip_forward = 1
+```
 - apply changes with
-`sysctl -p
+```
+sysctl -p
 ```
 ### Step 2: iptables
 1. packet engine IP tables, a spreadsheet of rules

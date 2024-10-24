@@ -15,8 +15,7 @@ else
     echo "Line added to the file."
 fi
 sysctl -p
-
-# apt install iptables-persistent -y
-# iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT
-# iptables -t nat -s 192.168.1.0/24 -A POSTROUTING -j MASQUERADE
-# sh -c 'iptables-save > /etc/iptables/rules.v4
+sudo DEBIAN_FRONTEND=noninteractive apt-get install iptables-persistent -y
+iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT
+iptables -t nat -s 192.168.1.0/24 -A POSTROUTING -j MASQUERADE
+sh -c 'iptables-save > /etc/iptables/rules.v4'

@@ -20,7 +20,7 @@ def add_spelled_numbers(in_line: str):
     return in_line
 
 
-with open('./advent1.txt') as f:
+with open('advent1.txt') as f:
     lines = f.readlines()
 
     _sum = 0
